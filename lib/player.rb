@@ -34,10 +34,15 @@ class Player
 		update_ship_list(ship)
 		home_grid.positions[convert_latitude(coordinate)][convert_longitude(coordinate), convert_longitude(coordinate) + ship.length] = ship.cells
 		update_ship_coordinates(ship, coordinate)
+		update_grid_coordinates(ship, coordinate)
 	end
 
 	def update_ship_coordinates(ship, coordinate)
 		ship.cells.map!.with_index(0) {|element, index| element = "#{coordinate[0]}#{coordinate[1].to_i+index}"}
+	end
+
+	def update_grid_coordinates(ship, coordinate)
+		ship.cells.each {|s| home_grid.coordinates_with_ship << s}
 	end
 
 	def update_ship_list(ship)

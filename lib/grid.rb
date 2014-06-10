@@ -12,6 +12,10 @@ class Grid
 		@positions ||= []
 	end
 
+	def coordinates_with_ship
+		@coordinates_with_ship ||= []
+	end
+
 	def checks_hit_on(coordinate) 
 		self.positions[convert_latitude(coordinate)][convert_longitude(coordinate)] = 'h' if self.positions[convert_latitude(coordinate)][convert_longitude(coordinate)] = 's'
 	end
