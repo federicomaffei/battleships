@@ -1,4 +1,8 @@
+require_relative 'coordinate'
+
 class Grid
+
+	include Coordinate
 
 	def initialize
 		@positions = Array.new(10) {Array.new(10,'m')}
@@ -8,25 +12,8 @@ class Grid
 		@positions ||= []
 	end
 
-	def mark_hit_on(latitude, longitude)
-		self.positions[latitude - 1][longitude - 1] = 'h'
-	end
-
-end
-
-class HomeGrid < Grid
-
-	def initialize
-		@positions = Array.new(10) {Array.new(10,'m')}
-		@battling_ships = battling_ships
-	end
-
-	def battling_ships
-		@battling_ships ||= []
-	end
-
-	def receives(ship)
-		battling_ships << ship
+	def checks_hit_on(coordinate) 
+		self.positions[convert_latitude(coordinate)][convert_longitude(coordinate)] = 'h' if self.positions[convert_latitude(coordinate)][convert_longitude(coordinate)] = 's'
 	end
 
 end
