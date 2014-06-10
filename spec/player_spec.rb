@@ -46,13 +46,17 @@ describe Player do
 		end
 	end
 
-	context 'target coordinates to opponent ships' do
+	context 'can play battleships' do
 
-		it 'updates the list of coordinates with the targeted one' do
+		it 'target coordinates to opponent ships' do
 			player.targets('A1')
 			expect(player.coordinate_offensive.target_locations).to eq ['A1']
 		end
+
+		it "knows if it's its turn to play or not" do
+			expect(player).to be_active
+			player.inactive!
+			expect(player).not_to be_active
+		end
 	end
-
-
 end

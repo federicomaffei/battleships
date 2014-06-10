@@ -5,10 +5,11 @@ require_relative 'coordinate'
 
 class Player
 
-	attr_accessor :home_grid, :tracking_grid, :carrier, :battleship, :destroyer1, :patrol, :coordinate_defensive, :coordinate_offensive
-	attr_reader :name
+	attr_accessor :home_grid, :tracking_grid, :carrier, :battleship, :destroyer1, :patrol, :coordinate_defensive, :coordinate_offensive, :name, :active
 
 	def initialize(name = 'player1')
+		@active = true
+		@name = name
 		@placed_ships = placed_ships
 		@carrier = Carrier.new
 		@battleship = BattleShip.new
@@ -21,6 +22,18 @@ class Player
 
 	def placed_ships
 		@placed_ships ||= []
+	end
+
+	def active?
+		@active
+	end
+
+	def inactive!
+		@active = false
+	end
+
+	def active!
+		@active = true
 	end
 
 	def unplaced_ships
