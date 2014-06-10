@@ -18,7 +18,7 @@ describe Player do
 		end
 
 		it 'has an empty ship location list' do
-			expect(player.coordinate_defense.ship_locations).to be_empty
+			expect(player.coordinate_defensive.ship_locations).to be_empty
 
 		end
 	end
@@ -32,7 +32,7 @@ describe Player do
 
 		it 'updates the list of coordinates where a ship is present on the grid' do
 			player.place_on_grid("carrier", 'A1')
-			expect(player.coordinate_defense.ship_locations).to eq ['A1', 'A2', 'A3', 'A4', 'A5']
+			expect(player.coordinate_defensive.ship_locations).to eq ['A1', 'A2', 'A3', 'A4', 'A5']
 		end
 
 		it "updating the placed_ship array" do
@@ -43,6 +43,14 @@ describe Player do
 		it "updating the unplaced ship array" do
 			player.place_on_grid("carrier", 'A1')
 			expect(player.unplaced_ships.count).to eq 4
+		end
+	end
+
+	context 'target coordinates to opponent ships' do
+
+		it 'updates the list of coordinates with the targeted one' do
+			player.targets('A1')
+			expect(player.coordinate_offensive.target_locations).to eq ['A1']
 		end
 	end
 

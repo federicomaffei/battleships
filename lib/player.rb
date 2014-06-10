@@ -5,7 +5,7 @@ require_relative 'coordinate'
 
 class Player
 
-	attr_accessor :home_grid, :tracking_grid, :carrier, :battleship, :destroyer1, :patrol, :coordinate_defense, :coordinate_offense
+	attr_accessor :home_grid, :tracking_grid, :carrier, :battleship, :destroyer1, :patrol, :coordinate_defensive, :coordinate_offensive
 	attr_reader :name
 
 	def initialize(name = 'player1')
@@ -15,8 +15,8 @@ class Player
 		@destroyer1 = Destroyer.new
 		@destroyer2 = Destroyer.new
 		@patrol = Patrol.new
-		@coordinate_defense = Coordinate.new
-		@coordinate_offense = Coordinate.new
+		@coordinate_defensive = Coordinate.new
+		@coordinate_offensive = Coordinate.new
 	end
 
 	def placed_ships
@@ -39,7 +39,7 @@ class Player
 	end
 
 	def update_grid_coordinates(ship, coordinate)
-		ship.cells.each {|s| coordinate_defense.add_ship(s)}
+		ship.cells.each {|s| coordinate_defensive.add_ship(s)}
 	end
 
 	def update_ship_list(ship)
@@ -53,8 +53,8 @@ class Player
 		end
 	end
 
-	def bombs(coordinate)
-			
+	def targets(coordinate)
+		coordinate_offensive.add_target(coordinate)
 	end
 
 end

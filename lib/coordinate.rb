@@ -11,6 +11,10 @@ class Coordinate
 	def add_ship(ship)
 		ship_locations << ship
 	end
+
+	def add_target(coordinate)
+		target_locations << coordinate
+	end
 		
 	def convert_latitude(coordinate)
 		latitude = coordinate[0].tr("A-Z", "1-9a-q").to_i(27) - 1
