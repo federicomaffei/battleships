@@ -10,7 +10,7 @@ class Ship
 		@cells = Array.new(length,'s')
 	end
 
-	def target!
+	def target
 		@hits += 1
 		self.sink! if @hits == @length
 	end

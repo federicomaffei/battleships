@@ -1,9 +1,7 @@
 require "coordinate"
 
-class CoordinateHolder; include Coordinate; end
-
 describe Coordinate do
-	let(:coordinate) {CoordinateHolder.new}
+	let(:coordinate) {Coordinate.new}
 
 	it "it translates a string coordinate to numeric latitude" do
 		expect(coordinate.convert_latitude("A1")).to eq 0

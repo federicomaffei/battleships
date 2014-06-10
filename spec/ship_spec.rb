@@ -41,7 +41,7 @@ describe Ship do
 		end
 		it 'has 1 hit if targeted one time' do
 			ship = Ship.new
-			ship.target!
+			ship.target
 			expect(ship.hits).to eq 1
 		end
 	end
@@ -53,7 +53,7 @@ describe Ship do
 		end
 		it 'is able to sink when targeted for all its length' do
 			ship = Ship.new
-			4.times {ship.target!}
+			4.times {ship.target}
 			expect(ship).to be_sunk
 		end
 	end

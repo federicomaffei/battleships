@@ -29,8 +29,6 @@ Collaborators: Grid
 - has two grids, one to keep ships, one to show hits and misses
 - has 5 ships
 - places ships on the home grid
-- calls shots on the opponent's grid
-- looks into the opponent's grid to see which are the hits or misses
 
 Collaborators: Ship, Grid
 
