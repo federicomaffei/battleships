@@ -59,6 +59,32 @@ describe BattleShips do
 			battleships.prompt_target(battleships.player1)
 		end
 
+		it 'allows the player to know that it hit a ship on a coordinate' do
+			message = "HIT! Please target another coordinate"
+			expect(STDOUT).to receive(:puts).with message
+			battleships.hit_message
+		end
+
+		it 'allows the player to know that it hit a ship on a coordinate' do
+			message = "MISS! The control goes to the other player"
+			expect(STDOUT).to receive(:puts).with message
+			battleships.miss_message
+		end
+
+		it 'updates the hit count of a ship that has been hit by player1' do
+			battleships.player2.place_on_grid('carrier', 'A1')
+			battleships.target_ship('A1')
+			expect(battleships.player2.carrier.hits).to eq 1
+		end
+
+		it 'updates the hit count of a ship that has been hit by player2' do
+			battleships.player1.place_on_grid('carrier', 'A1')
+			battleships.players_swap
+			battleships.target_ship('A1')
+			expect(battleships.player1.carrier.hits).to eq 1
+		end
+
+
 	end
 
 end
