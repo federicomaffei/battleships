@@ -54,13 +54,13 @@ describe BattleShips do
 		end
 
 		it 'asks the player for a coordinate to target' do
-			prompt = "Player 1: Please enter a coordinate to target"
+			prompt = "Player 1: Please enter a coordinate to target:"
 			expect(STDOUT).to receive(:puts).with prompt
 			battleships.prompt_target(battleships.player1)
 		end
 
 		it 'allows the player to know that it hit a ship on a coordinate' do
-			message = "HIT! Please target another coordinate"
+			message = "HIT! Please target another coordinate:"
 			expect(STDOUT).to receive(:puts).with message
 			battleships.hit_message
 		end
@@ -71,17 +71,30 @@ describe BattleShips do
 			battleships.miss_message
 		end
 
+		it 'allows a player to know that it won the game' do
+			message = "WIN! Player 1 won Battleships!"
+			expect(STDOUT).to receive(:puts).with message
+			battleships.win_message(battleships.player1)
+		end
+
 		it 'updates the hit count of a ship that has been hit by player1' do
 			battleships.player2.place_on_grid('carrier', 'A1')
-			battleships.target_ship('A1')
+			battleships.play_a_round('A1')
 			expect(battleships.player2.carrier.hits).to eq 1
 		end
 
 		it 'updates the hit count of a ship that has been hit by player2' do
 			battleships.player1.place_on_grid('carrier', 'A1')
 			battleships.players_swap
-			battleships.target_ship('A1')
+			battleships.play_a_round('A1')
 			expect(battleships.player1.carrier.hits).to eq 1
+		end
+
+		it 'knows if a player won the game' do
+			battleships.player2.place_on_grid('patrol', 'A1')
+			battleships.play_a_round('A1')
+			battleships.play_a_round('A2')
+			# expect(battleships.have_a_winner(battleships.player1)).to be_true
 		end
 
 

@@ -24,17 +24,22 @@ class BattleShips
 	end
 
 	def prompt_target(player)
-		prompt = "#{player.name}: Please enter a coordinate to target"
+		prompt = "#{player.name}: Please enter a coordinate to target:"
 		puts prompt
 	end
 
 	def hit_message
-		message = "HIT! Please target another coordinate"
+		message = "HIT! Please target another coordinate:"
 		puts message
 	end
 
 	def miss_message
 		message = "MISS! The control goes to the other player"
+		puts message
+	end
+
+	def win_message(player)
+		message = "WIN! #{player.name} won Battleships!"
 		puts message
 	end
 
@@ -46,16 +51,26 @@ class BattleShips
 		@player1.active, @player2.active = @player2.active, @player1.active
 	end
 
-	def target_ship(coordinate)
+	def play_a_round(coordinate)
 		@player1.active? ? scan_for_hits(coordinate, @player2) : scan_for_hits(coordinate, @player1)
+	end
+
+	def good_round(coordinate, player)
+		player.placed_ships.each {|ship| ship.target if ship.cells.include?(coordinate)}
+		hit_message
+		# have_a_winner(player)
+	end
+
+	def bad_round
+		players_swap
+		miss_message
 	end
 
 	def scan_for_hits(coordinate, player)
 		if player.coordinate_defensive.ship_locations.include?(coordinate)
-				player.placed_ships.each {|ship| ship.target if ship.cells.include?(coordinate)}
+				good_round(coordinate, player)
+		else bad_round
 		end
 	end
-
-
 
 end
