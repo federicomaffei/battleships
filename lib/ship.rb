@@ -1,12 +1,13 @@
 class Ship
 
-	attr_accessor :type, :length, :cells, :hits, :sunk
+	attr_accessor :type, :length, :cells, :hits, :sunk, :horizontal
 
 	def initialize(length = 4)
 		@hits = 0
 		@sunk = false
 		@type = 'battleship'
 		@length = length
+		@horizontal = true
 		@cells = Array.new(length,'s')
 	end
 
@@ -21,6 +22,14 @@ class Ship
 
 	def sink!
 		@sunk = true
+	end
+
+	def horizontal
+		@horizontal
+	end
+
+	def vertical!
+		@horizontal = false
 	end
 
 end

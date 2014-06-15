@@ -1,0 +1,37 @@
+<html>
+<head>
+  <title>Federico's Battleships Page</title>
+</head>
+<body>
+  <h1><a href = 'localhost:9393'>Welcome to Battleships.</a></h1>
+  <p><%= session[:player_name] %>'s defending grid.</p>
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th>A</th>
+        <th>B</th>
+        <th>C</th>
+        <th>D</th>
+        <th>E</th>
+        <th>F</th>
+        <th>G</th>
+        <th>H</th>
+        <th>I</th>
+        <th>J</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% session[:home_grid].each_with_index do |row, index| %>
+      <tr>
+        <th><%= index + 1 %></th>
+        <% row.each do |column| %>
+        <td><%= column %></td>
+        <% end %>
+      </tr>
+      <% end %>
+    </tbody>
+  </tbody>
+</table>
+</body>
+</html>

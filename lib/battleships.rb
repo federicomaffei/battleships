@@ -1,3 +1,5 @@
+require_relative 'player'
+
 class BattleShips
 
 	attr_accessor :player1, :player2

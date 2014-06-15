@@ -1,5 +1,9 @@
 class Coordinate
 
+	def horizontal_coordinates
+		@horizontal_coordinates = ('a'..'j').to_a
+	end
+
 	def ship_locations
 		@ship_locations ||= []
 	end
@@ -22,6 +26,11 @@ class Coordinate
 
 	def convert_longitude(coordinate)
 		longitude = coordinate[1].to_i - 1
+	end
+
+	def coordinate_horizontal(ship, coordinate)
+		start = horizontal_coordinates.index(coordinate[0])
+		ship.cells.map!.with_index(start) {|element, index| element = "#{@horizontal_coordinates[index]}#{coordinate[1]}"}
 	end
 
 end
