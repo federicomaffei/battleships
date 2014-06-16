@@ -44,17 +44,31 @@ class Player
 		ship = selected_ship(ship_type).first
 		update_ship_list(ship)
 		update_ship_coordinates(ship, coordinate)
-		update_defensive_coordinates(ship, coordinate)
 		update_grid_coordinates(ship, coordinate)
+		update_defensive_coordinates(ship, coordinate)
 	end
 
 	def update_ship_coordinates(ship, coordinate)
-		coordinate_defensive.coordinate_horizontal(ship, coordinate)
-		# ship.cells.map!.with_index(0) {|element, index| element = "#{coordinate[0]}#{coordinate[1].to_i+index}"} VERTICAL
+		ship.horizontal? ? coordinate_defensive.coordinate_horizontal(ship, coordinate) : coordinate_defensive.coordinate_vertical(ship, coordinate)
+	end
+
+	def convert_latitude(coordinate)
+		latitude = coordinate[1].to_i - 1
+	end
+
+	def convert_longitude(coordinate)
+		longitude = coordinate[0].tr("A-Z", "1-9a-q").to_i(27) - 1 
 	end
 
 	def update_grid_coordinates(ship, coordinate)
-		home_grid.positions[coordinate_defensive.convert_latitude(coordinate)][coordinate_defensive.convert_longitude(coordinate), coordinate_defensive.convert_longitude(coordinate) + ship.length] = ship.cells
+		ship.cells.each do |coordinate|
+			home_grid.positions[convert_latitude(coordinate)][convert_longitude(coordinate)] = coordinate
+		end
+		# # if ship.horizontal?
+		# 	home_grid.positions[coordinate_defensive.convert_latitude(coordinate)][coordinate_defensive.convert_longitude(coordinate), coordinate_defensive.convert_longitude(coordinate) + ship.length] = ship.cells
+		# # else
+		# # 	home_grid.positions.transpose[coordinate_defensive.convert_longitude(coordinate)][coordinate_defensive.convert_latitude(coordinate), coordinate_defensive.convert_latitude(coordinate) + ship.length] = ship.cells
+		# # end
 	end
 
 	def update_defensive_coordinates(ship, coordinate)

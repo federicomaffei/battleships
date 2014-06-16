@@ -24,12 +24,16 @@ class Ship
 		@sunk = true
 	end
 
-	def horizontal
+	def horizontal?
 		@horizontal
 	end
 
 	def vertical!
 		@horizontal = false
+	end
+
+	def horizontal!
+		@horizontal = true	
 	end
 
 end
