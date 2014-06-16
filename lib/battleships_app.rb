@@ -51,6 +51,6 @@ post '/enter_name' do
 	ship_type = params[:ship_name]
 	coordinate = params[:coordinate]
 	player.place_on_grid(ship_type, coordinate)
-	session[:home_grid] = player.home_grid.positions.reverse
+	session[:home_grid] = player.home_grid.positions
 	redirect '/entered_ship'
 end
