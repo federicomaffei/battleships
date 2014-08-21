@@ -90,11 +90,11 @@ describe BattleShips do
 			expect(battleships.player1.carrier.hits).to eq 1
 		end
 
-		it 'knows if a player won the game' do
+		xit 'knows if a player won the game' do
 			battleships.player2.place_on_grid('patrol', 'A1')
 			battleships.play_a_round('A1')
 			battleships.play_a_round('A2')
-			# expect(battleships.have_a_winner(battleships.player1)).to be_true
+			expect(battleships.have_a_winner(battleships.player1)).to be_true
 		end
 
 

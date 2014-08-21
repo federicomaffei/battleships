@@ -10,5 +10,6 @@ describe Coordinate do
 
 	it "it translates a string coordinate to numeric longitude" do
 		expect(coordinate.convert_longitude("A1")).to eq 0
+		expect(coordinate.convert_longitude("J10")).to eq 9
 	end
 end

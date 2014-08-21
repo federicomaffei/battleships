@@ -25,14 +25,14 @@ describe Player do
 
 	context 'can place ships on the grid' do
 
-		it "marks with coordinates the cells of a placed ship" do
+		it "updating ship cells list" do
 			player.place_on_grid("carrier", 'A1')
-			expect(player.carrier.cells).to eq ['A1', 'A2', 'A3', 'A4', 'A5']
+			expect(player.carrier.cells).to eq ['A1', 'B1', 'C1', 'D1', 'E1']
 		end
 
-		it 'updates the list of coordinates where a ship is present on the grid' do
+		it 'updating the list of coordinates' do
 			player.place_on_grid("carrier", 'A1')
-			expect(player.coordinate_defensive.ship_locations).to eq ['A1', 'A2', 'A3', 'A4', 'A5']
+			expect(player.coordinate_defensive.ship_locations).to eq ['A1', 'B1', 'C1', 'D1', 'E1']
 		end
 
 		it "updating the placed_ship array" do
