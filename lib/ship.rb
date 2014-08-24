@@ -22,6 +22,7 @@ class Ship
 
 	def sink!
 		@sunk = true
+		puts "YOU SUNK A #{self.type.swapcase}!"
 	end
 
 	def horizontal?

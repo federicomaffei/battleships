@@ -5,7 +5,6 @@ describe BattleShips do
 	let(:battleships) {BattleShips.new}
 
 	context 'inizialization' do
-
 		it 'creates with two players named Player 1 and Player 2' do
 			expect(battleships.player1.name).to eq 'Player 1'
 			expect(battleships.player2.name).to eq 'Player 2'
@@ -16,11 +15,9 @@ describe BattleShips do
 			expect(STDOUT).to receive(:puts).with welcome
 			battleships.print_welcome
 		end
-
 	end
 
 	context 'ships placing' do
-
 		it 'asks the player to place ships by name' do
 			prompt = "Player 1: Please name a ship to place on the board"
 			expect(STDOUT).to receive(:puts).with prompt
@@ -42,11 +39,10 @@ describe BattleShips do
 			expect(STDIN).to receive(:gets).and_return("A1\n")
 			expect(battleships.get_data).to eq 'A1'
 		end
-
+		
 	end
 
 	context 'playing battleships' do
-
 		it 'allows players to swap turns' do
 			battleships.players_swap
 			expect(battleships.player1).not_to be_active
@@ -77,17 +73,29 @@ describe BattleShips do
 			battleships.win_message(battleships.player1)
 		end
 
-		it 'updates the hit count of a ship that has been hit by player1' do
+		it 'knows that a ship that has been hit by player1' do
 			battleships.player2.place_on_grid('carrier', 'A1')
+			expect(STDOUT).to receive(:puts).with 'HIT! Please target another coordinate:'
 			battleships.play_a_round('A1')
 			expect(battleships.player2.carrier.hits).to eq 1
 		end
 
-		it 'updates the hit count of a ship that has been hit by player2' do
+		it 'knows that a ship that has been hit by player2' do
 			battleships.player1.place_on_grid('carrier', 'A1')
 			battleships.players_swap
+			expect(STDOUT).to receive(:puts).with 'HIT! Please target another coordinate:'
 			battleships.play_a_round('A1')
 			expect(battleships.player1.carrier.hits).to eq 1
+		end
+
+		it 'knows that a ship has been sunk by player1' do
+			battleships.player2.place_on_grid('patrol', 'A1')
+			expect(STDOUT).to receive(:puts).with 'HIT! Please target another coordinate:'
+			battleships.play_a_round('A1')
+			expect(STDOUT).to receive(:puts).with 'YOU SUNK A PATROL!'
+			expect(STDOUT).to receive(:puts).with 'HIT! Please target another coordinate:'
+			battleships.play_a_round('B1')
+			expect(battleships.player2.patrol.sunk).to be_truthy
 		end
 
 		xit 'knows if a player won the game' do
@@ -96,10 +104,7 @@ describe BattleShips do
 			battleships.play_a_round('A2')
 			expect(battleships.have_a_winner(battleships.player1)).to be_true
 		end
-
-
 	end
-
 end
 
 

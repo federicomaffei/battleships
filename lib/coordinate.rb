@@ -21,11 +21,7 @@ class Coordinate
 	end
 		
 	def convert_latitude(coordinate)
-		if coordinate.length == 2
-			latitude = coordinate[1].to_i - 1
-		else
-			latitude = coordinate[1..2].to_i - 1
-		end
+		coordinate.length == 2 ? latitude = coordinate[1].to_i - 1 : latitude = coordinate[1..2].to_i - 1
 	end
 
 	def convert_longitude(coordinate)

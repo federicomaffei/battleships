@@ -42,10 +42,15 @@ class Player
 
 	def place_on_grid(ship_type, coordinate)
 		ship = selected_ship(ship_type).first
-		update_ship_list(ship)
 		update_ship_coordinates(ship, coordinate)
-		update_grid_coordinates(ship, coordinate)
-		update_defensive_coordinates(ship, coordinate)
+		if ship.cells & coordinate_defensive.ship_locations == []
+			update_defensive_coordinates(ship, coordinate)
+			update_grid_coordinates(ship, coordinate)
+			update_ship_list(ship)
+		else
+			ship.cells.map! {|item| "s"}
+			puts "Cannot place the #{ship.type} here! Please enter another coordinate:"
+		end
 	end
 
 	def update_ship_coordinates(ship, coordinate)
@@ -64,11 +69,6 @@ class Player
 		ship.cells.each do |coordinate|
 			home_grid.positions[convert_latitude(coordinate)][convert_longitude(coordinate)] = coordinate
 		end
-		# # if ship.horizontal?
-		# 	home_grid.positions[coordinate_defensive.convert_latitude(coordinate)][coordinate_defensive.convert_longitude(coordinate), coordinate_defensive.convert_longitude(coordinate) + ship.length] = ship.cells
-		# # else
-		# # 	home_grid.positions.transpose[coordinate_defensive.convert_longitude(coordinate)][coordinate_defensive.convert_latitude(coordinate), coordinate_defensive.convert_latitude(coordinate) + ship.length] = ship.cells
-		# # end
 	end
 
 	def update_defensive_coordinates(ship, coordinate)
@@ -85,9 +85,4 @@ class Player
 			s.type == ship_type
 		end
 	end
-
-	def targets(coordinate)
-		coordinate_offensive.add_target(coordinate)
-	end
-
 end

@@ -52,6 +52,7 @@ describe Ship do
 			expect(ship).not_to be_sunk
 		end
 		it 'is able to sink when targeted for all its length' do
+			expect(STDOUT).to receive(:puts).with 'YOU SUNK A BATTLESHIP!'
 			ship = Ship.new
 			4.times {ship.target}
 			expect(ship).to be_sunk

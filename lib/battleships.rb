@@ -59,7 +59,6 @@ class BattleShips
 
 	def good_round(coordinate, player)
 		player.placed_ships.each {|ship| ship.target if ship.cells.include?(coordinate)}
-		hit_message
 		# have_a_winner(player)
 	end
 
@@ -71,6 +70,7 @@ class BattleShips
 	def scan_for_hits(coordinate, player)
 		if player.coordinate_defensive.ship_locations.include?(coordinate)
 				good_round(coordinate, player)
+				hit_message
 		else bad_round
 		end
 	end
