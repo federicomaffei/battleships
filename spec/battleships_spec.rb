@@ -18,28 +18,39 @@ describe BattleShips do
 	end
 
 	context 'ships placing' do
-		it 'asks the player to place ships by name' do
-			prompt = "Player 1: Please name a ship to place on the board"
-			expect(STDOUT).to receive(:puts).with prompt
-			battleships.prompt_ships(battleships.player1)
+		it 'allows one player to place all 5 ships correctly' do
+			expect(STDOUT).to receive(:puts).with "Player 1: Please place the carrier with the first coordinate:"
+			expect(STDIN).to receive(:gets).and_return("A1")
+			expect(STDOUT).to receive(:puts).with "Player 1: Please place the battleship with the first coordinate:"
+			expect(STDIN).to receive(:gets).and_return("B3")
+			expect(STDOUT).to receive(:puts).with "Player 1: Please place the destroyer with the first coordinate:"
+			expect(STDIN).to receive(:gets).and_return("C4")
+			expect(STDOUT).to receive(:puts).with "Player 1: Please place the destroyer with the first coordinate:"
+			expect(STDIN).to receive(:gets).and_return("D5")
+			expect(STDOUT).to receive(:puts).with "Player 1: Please place the patrol with the first coordinate:"
+			expect(STDIN).to receive(:gets).and_return("F7")
+			battleships.place_ships(battleships.player1)
+			expect(battleships.player1.unplaced_ships.count).to eq 0
+			expect(battleships.player1.placed_ships.count).to eq 5
 		end
 
-		it 'asks the player to place ships by coordinate' do
-			prompt = "Player 1: Please name a coordinate to place the ship on"
-			expect(STDOUT).to receive(:puts).with prompt
-			battleships.prompt_coordinates(battleships.player1)
+		it 'handles the case the player gets one coordinate wrong' do
+			expect(STDOUT).to receive(:puts).with "Player 1: Please place the carrier with the first coordinate:"
+			expect(STDIN).to receive(:gets).and_return("A1")
+			expect(STDOUT).to receive(:puts).with "Player 1: Please place the battleship with the first coordinate:"
+			expect(STDIN).to receive(:gets).and_return("B1")
+			expect(STDOUT).to receive(:puts).with "Cannot place the battleship here!"
+			expect(STDIN).to receive(:gets).and_return("B3")
+			expect(STDOUT).to receive(:puts).with "Player 1: Please place the destroyer with the first coordinate:"
+			expect(STDIN).to receive(:gets).and_return("C4")
+			expect(STDOUT).to receive(:puts).with "Player 1: Please place the destroyer with the first coordinate:"
+			expect(STDIN).to receive(:gets).and_return("D5")
+			expect(STDOUT).to receive(:puts).with "Player 1: Please place the patrol with the first coordinate:"
+			expect(STDIN).to receive(:gets).and_return("F7")
+			battleships.place_ships(battleships.player1)
+			expect(battleships.player1.unplaced_ships.count).to eq 0
+			expect(battleships.player1.placed_ships.count).to eq 5
 		end
-
-		it 'allows the player to give the name of the ships' do	
-			expect(STDIN).to receive(:gets).and_return("carrier\n")
-			expect(battleships.get_data).to eq 'carrier'
-		end
-
-		it 'allows the player to give the coordinate of the ships' do	
-			expect(STDIN).to receive(:gets).and_return("A1\n")
-			expect(battleships.get_data).to eq 'A1'
-		end
-		
 	end
 
 	context 'playing battleships' do
@@ -61,8 +72,8 @@ describe BattleShips do
 			battleships.hit_message
 		end
 
-		it 'allows the player to know that it hit a ship on a coordinate' do
-			message = "MISS! The control goes to the other player"
+		it 'allows the player to know that it did not hit a ship on a coordinate' do
+			message = "MISS! The control goes to the other player."
 			expect(STDOUT).to receive(:puts).with message
 			battleships.miss_message
 		end
@@ -73,22 +84,23 @@ describe BattleShips do
 			battleships.win_message(battleships.player1)
 		end
 
-		it 'knows that a ship that has been hit by player1' do
+		it 'counts the times that a ship has been hit by a player' do
 			battleships.player2.place_on_grid('carrier', 'A1')
 			expect(STDOUT).to receive(:puts).with 'HIT! Please target another coordinate:'
 			battleships.play_a_round('A1')
 			expect(battleships.player2.carrier.hits).to eq 1
 		end
 
-		it 'knows that a ship that has been hit by player2' do
-			battleships.player1.place_on_grid('carrier', 'A1')
-			battleships.players_swap
+		it 'changes active player when a shot is missed by a player' do
+			battleships.player2.place_on_grid('patrol', 'A1')
 			expect(STDOUT).to receive(:puts).with 'HIT! Please target another coordinate:'
 			battleships.play_a_round('A1')
-			expect(battleships.player1.carrier.hits).to eq 1
+			expect(STDOUT).to receive(:puts).with 'MISS! The control goes to the other player.'
+			battleships.play_a_round('B2')
+			expect(battleships.player2).to be_active
 		end
 
-		it 'knows that a ship has been sunk by player1' do
+		it 'puts a message when a ship has been sunk by a player during a turn' do
 			battleships.player2.place_on_grid('patrol', 'A1')
 			expect(STDOUT).to receive(:puts).with 'HIT! Please target another coordinate:'
 			battleships.play_a_round('A1')

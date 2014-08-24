@@ -44,7 +44,7 @@ describe Player do
 		end
 
 		it "does not allow to place a ship in same coordinates as another" do
-			expect(STDOUT).to receive(:puts).with 'Cannot place the patrol here! Please enter another coordinate:'
+			expect(STDOUT).to receive(:puts).with 'Cannot place the patrol here!'
 			player.place_on_grid("carrier", 'A1')
 			player.place_on_grid("patrol", 'E1')
 			expect(player.unplaced_ships.count).to eq 4

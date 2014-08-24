@@ -24,6 +24,14 @@ class Player
 		@placed_ships ||= []
 	end
 
+	def unplaced_ships
+		@unplaced_ships ||= [@carrier, @battleship, @destroyer1, @destroyer2, @patrol]
+	end
+
+	def total_ships
+		@ships ||= [@carrier, @battleship, @destroyer1, @destroyer2, @patrol]
+	end
+
 	def active?
 		@active
 	end
@@ -36,10 +44,6 @@ class Player
 		@active = true
 	end
 
-	def unplaced_ships
-		@unplaced_ships ||= [@carrier, @battleship, @destroyer1, @destroyer2, @patrol]
-	end
-
 	def place_on_grid(ship_type, coordinate)
 		ship = selected_ship(ship_type).first
 		update_ship_coordinates(ship, coordinate)
@@ -47,9 +51,11 @@ class Player
 			update_defensive_coordinates(ship, coordinate)
 			update_grid_coordinates(ship, coordinate)
 			update_ship_list(ship)
+			return true
 		else
 			ship.cells.map! {|item| "s"}
-			puts "Cannot place the #{ship.type} here! Please enter another coordinate:"
+			puts "Cannot place the #{ship.type} here!"
+			return false
 		end
 	end
 

@@ -15,16 +15,6 @@ class BattleShips
 		puts welcome
 	end
 
-	def prompt_ships(player)
-		prompt = "#{player.name}: Please name a ship to place on the board"
-		puts prompt
-	end
-
-	def prompt_coordinates(player)
-		prompt = "#{player.name}: Please name a coordinate to place the ship on"
-		puts prompt
-	end
-
 	def prompt_target(player)
 		prompt = "#{player.name}: Please enter a coordinate to target:"
 		puts prompt
@@ -36,7 +26,7 @@ class BattleShips
 	end
 
 	def miss_message
-		message = "MISS! The control goes to the other player"
+		message = "MISS! The control goes to the other player."
 		puts message
 	end
 
@@ -47,7 +37,16 @@ class BattleShips
 
 	def get_data
 		STDIN.gets.chomp
-	end	
+	end
+
+	def place_ships(player)
+		player.total_ships.each do |ship|
+			puts "#{player.name}: Please place the #{ship.type} with the first coordinate:"
+			unless player.place_on_grid(ship.type, get_data) == true
+				player.place_on_grid(ship.type, get_data)
+			end
+		end
+	end
 
 	def players_swap
 		@player1.active, @player2.active = @player2.active, @player1.active
@@ -59,7 +58,6 @@ class BattleShips
 
 	def good_round(coordinate, player)
 		player.placed_ships.each {|ship| ship.target if ship.cells.include?(coordinate)}
-		# have_a_winner(player)
 	end
 
 	def bad_round
@@ -74,5 +72,4 @@ class BattleShips
 		else bad_round
 		end
 	end
-
 end
