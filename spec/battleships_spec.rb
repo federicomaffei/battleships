@@ -110,11 +110,15 @@ describe BattleShips do
 			expect(battleships.player2.patrol.sunk).to be_truthy
 		end
 
-		xit 'knows if a player won the game' do
+		it 'knows if a player won the game' do
 			battleships.player2.place_on_grid('patrol', 'A1')
+			expect(STDOUT).to receive(:puts).with 'HIT! Please target another coordinate:'
 			battleships.play_a_round('A1')
-			battleships.play_a_round('A2')
-			expect(battleships.have_a_winner(battleships.player1)).to be_true
+			expect(STDOUT).to receive(:puts).with 'YOU SUNK A PATROL!'
+			expect(STDOUT).to receive(:puts).with 'HIT! Please target another coordinate:'
+			expect(STDOUT).to receive(:puts).with 'Player 1 WINS BATTLESHIPS!!!!!!!!!!!!'
+			battleships.play_a_round('B1')
+			expect(battleships.have_a_winner(battleships.player1)).to be_truthy
 		end
 	end
 end

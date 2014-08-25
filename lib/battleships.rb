@@ -15,6 +15,10 @@ class BattleShips
 		puts welcome
 	end
 
+	def inactive_player
+		@player1.active? ? @player2 : @player1
+	end
+
 	def prompt_target(player)
 		prompt = "#{player.name}: Please enter a coordinate to target:"
 		puts prompt
@@ -67,9 +71,20 @@ class BattleShips
 
 	def scan_for_hits(coordinate, player)
 		if player.coordinate_defensive.ship_locations.include?(coordinate)
-				good_round(coordinate, player)
-				hit_message
+			good_round(coordinate, player)
+			hit_message
 		else bad_round
+		end
+	end
+
+	def have_a_winner(player)
+		other_player = inactive_player
+		other_player.placed_ships.each do |ship|
+			player.sunk_count += 1 if ship.sunk?
+		end
+		if player.sunk_count == other_player.placed_ships.count
+			puts "#{player.name} WINS BATTLESHIPS!!!!!!!!!!!!"
+			return true 
 		end
 	end
 end

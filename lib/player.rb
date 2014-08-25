@@ -4,7 +4,7 @@ require_relative 'coordinate'
 
 class Player
 
-	attr_accessor :home_grid, :tracking_grid, :carrier, :battleship, :destroyer1, :patrol, :coordinate_defensive, :coordinate_offensive, :name, :active
+	attr_accessor :home_grid, :tracking_grid, :carrier, :battleship, :destroyer1, :patrol, :coordinate_defensive, :coordinate_offensive, :name, :active, :sunk_count
 
 	def initialize(name = 'player1')
 		@active = true
@@ -18,6 +18,7 @@ class Player
 		@patrol = Patrol.new
 		@coordinate_defensive = Coordinate.new
 		@coordinate_offensive = Coordinate.new
+		@sunk_count = 0
 	end
 
 	def placed_ships
