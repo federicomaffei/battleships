@@ -63,7 +63,7 @@ describe BattleShips do
 		it 'asks the player for a coordinate to target' do
 			prompt = "Player 1: Please enter a coordinate to target:"
 			expect(STDOUT).to receive(:puts).with prompt
-			battleships.prompt_target(battleships.player1)
+			battleships.prompt_target
 		end
 
 		it 'allows the player to know that it hit a ship on a coordinate' do
@@ -81,7 +81,7 @@ describe BattleShips do
 		it 'allows a player to know that it won the game' do
 			message = "WIN! Player 1 won Battleships!"
 			expect(STDOUT).to receive(:puts).with message
-			battleships.win_message(battleships.player1)
+			battleships.win_message
 		end
 
 		it 'counts the times that a ship has been hit by a player' do
@@ -89,7 +89,7 @@ describe BattleShips do
 			expect(STDOUT).to receive(:puts).with "Player 1: Please enter a coordinate to target:"
 			expect(STDIN).to receive(:gets).and_return("A1")
 			expect(STDOUT).to receive(:puts).with 'HIT!'
-			battleships.play_a_round(battleships.active_player)
+			battleships.play_a_round
 			expect(battleships.player2.carrier.hits).to eq 1
 		end
 
@@ -98,12 +98,11 @@ describe BattleShips do
 			expect(STDOUT).to receive(:puts).with "Player 1: Please enter a coordinate to target:"
 			expect(STDIN).to receive(:gets).and_return("A1")
 			expect(STDOUT).to receive(:puts).with 'HIT!'
-			battleships.play_a_round(battleships.active_player)
+			battleships.play_a_round
 			expect(STDOUT).to receive(:puts).with "Player 1: Please enter a coordinate to target:"
 			expect(STDIN).to receive(:gets).and_return("A2")
 			expect(STDOUT).to receive(:puts).with 'MISS! The control goes to the other player.'
-			expect(STDOUT).to receive(:puts).with "Player 2: Please enter a coordinate to target:"
-			battleships.play_a_round(battleships.active_player)
+			battleships.play_a_round
 			expect(battleships.player2).to be_active
 		end
 
@@ -113,12 +112,12 @@ describe BattleShips do
 			expect(STDOUT).to receive(:puts).with "Player 1: Please enter a coordinate to target:"
 			expect(STDIN).to receive(:gets).and_return("A1")
 			expect(STDOUT).to receive(:puts).with 'HIT!'
-			battleships.play_a_round(battleships.active_player)
+			battleships.play_a_round
 			expect(STDOUT).to receive(:puts).with "Player 1: Please enter a coordinate to target:"
 			expect(STDIN).to receive(:gets).and_return("B1")
 			expect(STDOUT).to receive(:puts).with 'YOU SUNK A PATROL!'
 			expect(STDOUT).to receive(:puts).with 'HIT!'
-			battleships.play_a_round(battleships.active_player)
+			battleships.play_a_round
 			expect(battleships.player2.patrol.sunk).to be_truthy
 		end
 
@@ -127,14 +126,13 @@ describe BattleShips do
 			expect(STDOUT).to receive(:puts).with "Player 1: Please enter a coordinate to target:"
 			expect(STDIN).to receive(:gets).and_return("A1")
 			expect(STDOUT).to receive(:puts).with 'HIT!'
-			battleships.play_a_round(battleships.active_player)
+			battleships.play_a_round
 			expect(STDOUT).to receive(:puts).with "Player 1: Please enter a coordinate to target:"
 			expect(STDIN).to receive(:gets).and_return("B1")
 			expect(STDOUT).to receive(:puts).with 'YOU SUNK A PATROL!'
 			expect(STDOUT).to receive(:puts).with 'HIT!'
 			expect(STDOUT).to receive(:puts).with 'Player 1 WINS BATTLESHIPS!!!!!!!!!!!!'
-			battleships.play_a_round(battleships.active_player)
-			expect(battleships.have_a_winner).to be_truthy
+			battleships.play_a_round
 		end
 	end
 end
