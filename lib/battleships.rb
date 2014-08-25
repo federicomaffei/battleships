@@ -19,13 +19,17 @@ class BattleShips
 		@player1.active? ? @player2 : @player1
 	end
 
+	def active_player
+		@player1.active? ? @player1 : @player2
+	end
+
 	def prompt_target(player)
 		prompt = "#{player.name}: Please enter a coordinate to target:"
 		puts prompt
 	end
 
 	def hit_message
-		message = "HIT! Please target another coordinate:"
+		message = "HIT!"
 		puts message
 	end
 
@@ -56,7 +60,9 @@ class BattleShips
 		@player1.active, @player2.active = @player2.active, @player1.active
 	end
 
-	def play_a_round(coordinate)
+	def play_a_round(player)
+		prompt_target(player)
+		coordinate = STDIN.gets.chomp
 		@player1.active? ? scan_for_hits(coordinate, @player2) : scan_for_hits(coordinate, @player1)
 	end
 
@@ -67,6 +73,7 @@ class BattleShips
 	def bad_round
 		players_swap
 		miss_message
+		prompt_target(active_player)
 	end
 
 	def scan_for_hits(coordinate, player)
@@ -77,14 +84,23 @@ class BattleShips
 		end
 	end
 
-	def have_a_winner(player)
-		other_player = inactive_player
-		other_player.placed_ships.each do |ship|
-			player.sunk_count += 1 if ship.sunk?
+	def have_a_winner
+		inactive_player.placed_ships.each do |ship|
+			active_player.sunk_count += 1 if ship.sunk?
 		end
-		if player.sunk_count == other_player.placed_ships.count
-			puts "#{player.name} WINS BATTLESHIPS!!!!!!!!!!!!"
+		if active_player.sunk_count == inactive_player.placed_ships.count
+			puts "#{active_player.name} WINS BATTLESHIPS!!!!!!!!!!!!"
 			return true 
+		end
+	end
+
+	def play_game
+		print_welcome
+		place_ships(player1)
+		place_ships(player2)
+		loop do
+			play_a_round(active_player)
+			have_a_winner
 		end
 	end
 end
