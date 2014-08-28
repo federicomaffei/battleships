@@ -10,8 +10,9 @@ The domain model, as presented to us, can be described as so:
 >After each player has placed their ships on their own board they take turns to shoot on the opponents board. In each round, each player takes a turn to announce a target square in the opponent's grid which is to be shot at. The opponent announces whether or not the square is occupied by a ship, and if it is a hit they mark this on their own primary grid. The attacking player notes the hit or miss on their own tracking grid, in order to build up a picture of the opponent's fleet.
 
 When all of one player's ships have been hit the game finishes and the player who has ships remaining is the winner.
+====================
 
-* The feature I implemented via TDD are:
+The feature I implemented via TDD are:
 
   1. A Ship object, which contains coordinates, and can be hit and sunk.
 
@@ -28,8 +29,9 @@ When all of one player's ships have been hit the game finishes and the player wh
   * Ruby
 
   * Rspec
+====================
 
-* How to run the application:
+How to run the application:
 
   * From command line enter: 
 ```bash
@@ -46,7 +48,8 @@ git clone git@github.com:federicomaffei/battleships.git
 cd battleships
 rspec
 ```
-* Possible future adds to the features:
+====================
+Possible future adds to the features:
 
   * Throw exception messages when the user input is not consistent for coordinates and shots.
 
