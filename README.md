@@ -28,7 +28,7 @@ The feature I implemented via TDD are:
 
   * Ruby
   * Rspec
-  
+
 ====================
 
 How to run the application:
@@ -40,7 +40,7 @@ cd battleships
 ruby lib/battleships_ruby_app.rb
 ```
 
-* How to test the application:
+How to test the application:
 
   * From command line enter:
 ```bash
