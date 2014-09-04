@@ -12,47 +12,47 @@ The domain model, as presented to us, can be described as so:
 
 ====================
 
-The feature I implemented via TDD are:
+##The features I implemented via TDD are:
 
-  1. A Ship object, which contains coordinates, and can be hit and sunk.
+1. A Ship object, which contains coordinates, and can be hit and sunk.
 
-  2. A Grid object, which allows the player to see their shots and their ships (if they are defending in that round).
+2. A Grid object, which allows the player to see their shots and their ships (if they are defending in that round).
 
-  3. A Coordinate object, which is able to store and translate the coordinates needed to place the ships and target them.
+3. A Coordinate object, which is able to store and translate the coordinates needed to place the ships and target them.
 
-  4. A Player object, which has 5 Ships, 2 Grids and 2 Coordinate systems. A player can be either active or inactive, and can place ships.
+4. A Player object, which has 5 Ships, 2 Grids and 2 Coordinate systems. A player can be either active or inactive, and can place ships.
 
-  5. A BattleShips object, which has 2 Players, and contains all the application logic and user interaction.
+5. A BattleShips object, which has 2 Players, and contains all the application logic and user interaction.
 
-* The programming languages and technologies I used are:
+###The programming languages and technologies I used are:
 
-  * Ruby
-  * Rspec
+* Ruby
+
+* Rspec
 
 ====================
 
-How to run the application:
+###How to run the application:
 
-  * From command line enter: 
+* From command line enter: 
 ```bash
 git clone git@github.com:federicomaffei/battleships.git
 cd battleships
 ruby lib/battleships_ruby_app.rb
 ```
 
-How to test the application:
+###How to test the application:
 
-  * From command line enter:
+* From command line enter:
 ```bash
 git clone git@github.com:federicomaffei/battleships.git
 cd battleships
 rspec
 ```
 ====================
-Possible future adds to the features:
 
-  * Throw exception messages when the user input is not consistent for coordinates and shots.
+###Possible future adds to the features:
 
-  * Add a choice at each shot so that the user can see the attacking grid only if he/she wants.
+* Throw exception messages when the user input is not consistent for coordinates and shots.
 
-
+* Add a choice at each shot so that the user can see the attacking grid only if he/she wants.
